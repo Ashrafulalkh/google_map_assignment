@@ -1,16 +1,17 @@
-# google_map_assignment
+## NOTICE FOR API
 
-A new Flutter project.
+> This app loads the API key from Android's `local.properties` file so that the Google Map API doesn't get exposed.
 
-## Getting Started
+1. **Run** `pub get` to generate `local.properties`
 
-This project is a starting point for a Flutter application.
+    ```sh
+    flutter pub get
+    ```
 
-A few resources to get you started if this is your first Flutter project:
+2. Go to `android/local.properties`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. Add this key inside the `local.properties`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    ```sh
+    MAPS_API_KEY=addApiKey
+    ```
