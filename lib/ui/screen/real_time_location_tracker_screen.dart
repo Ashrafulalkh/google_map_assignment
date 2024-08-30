@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_map_assignment/controller/current_location_controller.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lottie/lottie.dart' hide Marker;
 
 class RealTimeLocationTrackerScreen extends StatefulWidget {
   const RealTimeLocationTrackerScreen({super.key});
@@ -24,6 +25,7 @@ class _RealTimeLocationTrackerScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'Real Time Location Tracker',
@@ -43,6 +45,7 @@ class _RealTimeLocationTrackerScreenState
                 target: currentLatlng,
                 zoom: 18,
               ),
+              myLocationButtonEnabled: true,
               polylines: <Polyline>{
                 Polyline(
                   polylineId: const PolylineId('Polyline'),
@@ -50,7 +53,6 @@ class _RealTimeLocationTrackerScreenState
                   points: controller.polylineCoordinates,
                   width: 5,
                   jointType: JointType.round,
-                  geodesic: true,
                 )
               },
               markers: {
@@ -72,12 +74,26 @@ class _RealTimeLocationTrackerScreenState
               },
             );
           } else {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(),
-                  Text('Current Location Loading'),
+                  Lottie.asset(
+                    'assets/lotties/location_loading.json',
+                    height: 300,
+                    width: 300,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  const Text(
+                    'Fatching Current Location',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ],
               ),
             );

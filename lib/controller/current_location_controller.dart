@@ -14,11 +14,13 @@ class CurrentLocationController extends GetxController {
       final bool isEnable = await Geolocator.isLocationServiceEnabled();
       if (isEnable) {
         currentPosition = await Geolocator.getCurrentPosition();
+        update();
 
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
               accuracy: LocationAccuracy.best,
-              timeLimit: Duration(seconds: 10),
+              //timeLimit: Duration(seconds: 10),
+              distanceFilter: 2,
             )).listen((Position newLocation) {
           currentPosition = newLocation;
           print(newLocation);
@@ -28,9 +30,16 @@ class CurrentLocationController extends GetxController {
           LatLng(currentPosition!.latitude, currentPosition!.longitude);
           polylineCoordinates.add(newLatlng);
           update();
+        }
+        ).onError((handleError) async {
+          if(!await Geolocator.isLocationServiceEnabled()){
+            await Geolocator.openLocationSettings();
+          }
+          getCurrentLocation();
         });
       } else {
         Geolocator.openLocationSettings();
+        getCurrentLocation();
       }
     } else {
       if (permission == LocationPermission.deniedForever) {
