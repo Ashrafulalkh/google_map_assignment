@@ -102,4 +102,10 @@ class _RealTimeLocationTrackerScreenState
       ),
     );
   }
+
+  @override
+  void dispose() {
+    mapController!.dispose();
+    super.dispose();
+  }
 }
